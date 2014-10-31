@@ -1,0 +1,340 @@
+<krpano title="景区服务移动与导览" onstart="startup();">
+	
+	<include url="skin/vtourskin.xml" />
+	<action name="startup">
+		<!-- showlog(); -->
+		<!-- mul(bg3width,stagewidth,0.8);
+		mul(leftwidth,bg3width,0.2);
+		sub(rightwidth,bg3width,leftwidth);
+		set(layer[right].width,rightwidth);
+		trace('dfdfd',bg3width); -->
+		if(startscene === null, copy(startscene,scene[0].name));
+		loadscene(get(startscene), null,KEEPALL,BLEND(1));
+		set(heading, 0);
+		action(add_compass_spots);
+		<!-- set(layer[skin_map_zoom_out].visible, false) -->
+	</action>
+	
+	
+
+
+
+	<action name="storeopen">
+		slide_in_examples();
+		on_double_click(0.5,delayedcall(0.5,tween(layer[bg3].x, -95%, 0.01, easeOutCubic);set(layer[openstorebtn].html, '单击我打开商店');slide_out_examples();));	
+		tween(layer[bg3].x, 0%, 0, easeOutCubic);
+		set(layer[openstorebtn].html, '双击我关闭商店');
+	</action>
+
+	<!--双击事件 on_double_click(0.5,action()); -->
+	<action name="on_double_click">
+	if(dm_double_click_ok,
+	set(double_click_action,%2);
+	double_click_action();,
+	set(dm_double_click_ok,true);
+	delayedcall(%1,set(dm_double_click_ok,false););
+	);
+	</action>
+
+
+
+	<!-- <layer  name="btn" type="container" width="60" height="60" bgcapture="true" keep="true" bgalpha="1" align="left" edge="left" onclick="" /> -->
+	
+	<!-- 打开商店效果 -->
+	<action name="slide_in_examples">
+		tween(layer[bg1].x, 10%, 0.5, easeOutQuint);
+		tween(layer[bg2].x, 10%, 0.5, easeOutQuint);
+		tween(layer[bg1].bgalpha, 0, 0.5, easeOutQuint);
+		tween(layer[bg2].bgalpha, 0, 0.5, easeOutQuint);
+
+	</action>
+	<!-- 关闭商店效果 -->
+	<action name="slide_out_examples">
+		tween(layer[bg1].bgalpha, 0.5, 0.01, easeOutQuint);
+		tween(layer[bg2].bgalpha, 0.5, 0.01, easeOutQuint);
+		tween(layer[bg1].x, -40%, 0.75, easeOutCubic);
+		tween(layer[bg2].x, -40%, 0.75, easeOutCubic);
+	</action>
+	
+	<contextmenu fullscreen="true">
+	    <item caption="联系我们" onclick="showlog();" />
+	    <item caption="版权所有：海南师范大学" onclick="showlog();" />
+	    <item caption="联系我们" onclick="showlog();" />
+	    <item caption="联系我们" onclick="showlog();" />
+	    <item caption="联系我们" onclick="showlog();" />
+	</contextmenu>
+
+<!-- 	<progress showload="auto"
+          showwait="loopings()"
+          showreloads="true"
+          parent=""
+          /> -->
+          <!-- 进度条 -->
+	
+
+
+
+	
+ 	
+	
+	<control zoomtocursor="true" />
+
+
+
+
+
+	<!-- pano image -->
+	<scene name="scene_1" title="1" onstart="activatespot(spot1,0);"  thumburl="panos/p1/thumb.png" >
+		
+		<!-- <autorotate enabled="true" /> -->
+		<view hlookat="712.263" vlookat="-2.539" fovtype="MFOV" fov="120.000" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="range" />
+
+		<preview  url="panos/p1/preview.jpg" />
+
+		<image>
+
+			<cube url="panos/p1/pano_%s.jpg" />
+
+		</image>
+		<hotspot name="spot1" style="skin_hotspotstyle" ath="-158.085" atv="16.867" linkedscene="scene_2" />
+
+	</scene>
+	<scene name="scene_2" title="2" onstart="activatespot(spot2,90);"  thumburl="panos/p2/thumb.jpg" >
+		
+		<!-- <autorotate enabled="true" /> -->
+		<view hlookat="712.263" vlookat="-2.539" fovtype="MFOV" fov="120.000" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="range" />
+		<preview  url="panos/p2/preview.jpg" />
+
+		<image>
+
+			<cube url="panos/p2/pano_%s.jpg" />
+
+		</image>
+		<hotspot name="spot1" style="skin_hotspotstyle" ath="362.978" atv="14.424" linkedscene="scene_1" />
+
+	</scene>
+	<!-- use a grid preview pano as background -->
+	<!-- <preview type="grid(cube,64,64,512,0xCCCCCC,0xF6F6F6,0x999999);" /> -->
+
+
+	<!-- view settings -->
+	<!-- <view hlookat="0" vlookat="0" fovtype="VFOV" fov="100" fovmin="60" fovmax="250" /> -->
+
+	
+
+
+
+	<layer name="bg1"  type="container" align="left" width="40%" height="650" x="-40%" bgcolor="0x000000" bgalpha="0.5" />
+	<layer name="bg2" type="container" align="right" width="40%" height="650" x="-40%" bgcolor="0x000000" bgalpha="0.5" /><layer name="bg3" type="container" align="center" width="80%" height="650" x="-95%" bgcolor="0x000000" bgalpha="0.3"  >
+		<layer name="left"  type="container" align="lefttop" width="20%" x="2%" y="4%" height="92%"   bgcolor="0x000000" bgalpha="0.1" >
+			<layer name="bsp01"  style="storelist" align="lefttop" x="6%" y="1%"  html="景区门票"       onclick="" />
+			<layer name="bsp02"  style="storelist" align="lefttop" x="6%" y="10%"  html="餐饮饭馆"        onclick="" />
+			<layer name="bsp03"  style="storelist" align="lefttop" x="6%" y="19%" html="酒店住宿"               onclick="" />
+			<layer name="bsp04" style="storelist" align="lefttop" x="6%" y="28%" html="特色商店"                 onclick="" />
+			<layer name="bsp05"  style="storelist" align="lefttop" x="6%" y="37%" html="本地特产"             onclick="" />
+			<layer name="bsp06"  style="storelist" align="lefttop" x="6%" y="46%" html="机场直通车"             onclick="" />
+			<layer name="bsp07"  style="storelist" align="lefttop" x="6%" y="55%" html="活动预约"             onclick="" />
+			<layer name="bsp08"  style="storelist" align="lefttop" x="6%" y="64%" html="货到付款专区"             onclick="" />	
+		</layer>
+		<layer name="right" type="container" align="righttop" width="75%" x="2%" y="4%" height="92%" bgcolor="0x000000" bgalpha="0.1" >
+
+				<layer name="rightbar"   style="rightbar"  align="righttop"  x="1%" y="1%" html="商品列表"             onclick="" />
+
+				<layer  name="list" style="rightlist"  type="container"  align="lefttop" width="98%" height="94%" x="1%" y="6%" bgcolor="0x000000" bgalpha="0.0" >
+
+					<layer name="goods11" style="goods" type="container" width="23%" height="30%" x="2%" y="2%"  align="lefttop"      >
+						<layer name="goodsimg1"  style="goodsimg" align="lefttop"   html="商品图片1"  x="0%" y="0%"           onclick="" />
+						<layer name="goodsname1"  style="goodsname" align="lefttop"   html="商品名称1" x="0%" y="88%"            onclick="" />
+					</layer>
+
+					<layer name="goods12" style="goods" type="container" width="23%" height="30%" x="26%" y="2%"  align="lefttop"      >
+						<layer name="goodsimg2"  style="goodsimg" align="lefttop"   html="商品图片2"  x="0%"  y="0%"           onclick="" />
+						<layer name="goodsname2"  style="goodsname" align="lefttop"   html="商品名称2" x="0%" y="88%"            onclick="" />
+					</layer>
+
+					<layer name="goods13" style="goods" type="container" width="23%" height="30%" x="50%" y="2%"  align="lefttop"      >
+						<layer name="goodsimg3"  style="goodsimg" align="lefttop"   html="商品图片3"  x="0%" y="0%"           onclick="" />
+						<layer name="goodsname3"  style="goodsname" align="lefttop"   html="商品名称3" x="0%"  y="88%"            onclick="" />
+					</layer>
+
+					<layer name="goods14" style="goods" type="container" width="23%" height="30%" x="74%" y="2%"  align="lefttop"      >
+						<layer name="goodsimg4"  style="goodsimg" align="lefttop"   html="商品图片4"  x="0%" y="0%"           onclick="" />
+						<layer name="goodsname4"  style="goodsname" align="lefttop"   html="商品名称4" x="0%"  y="88%"            onclick="" />
+					</layer>
+
+					<layer name="goods21" style="goods" type="container" width="23%" height="30%" x="2%" y="33%"  align="lefttop"      >
+						<layer name="goodsimg21"  style="goodsimg" align="lefttop"   html="商品图片1"  x="0%" y="0%"           onclick="" />
+						<layer name="goodsname21"  style="goodsname" align="lefttop"   html="商品名称1" x="0%"  y="88%"            onclick="" />
+					</layer>
+
+					<layer name="goods22" style="goods" type="container" width="23%" height="30%" x="26%" y="33%"  align="lefttop"      >
+						<layer name="goodsimg22"  style="goodsimg" align="lefttop"   html="商品图片2"  x="0%" y="0%"           onclick="" />
+						<layer name="goodsname22"  style="goodsname" align="lefttop"   html="商品名称2" x="0%"  y="88%"            onclick="" />
+					</layer>
+
+					<layer name="goods23" style="goods" type="container" width="23%" height="30%" x="50%" y="33%"  align="lefttop"      >
+						<layer name="goodsimg23"  style="goodsimg" align="lefttop"   html="商品图片3"  x="0%" y="0%"           onclick="" />
+						<layer name="goodsname23"  style="goodsname" align="lefttop"   html="商品名称3" x="0%"  y="88%"            onclick="" />
+					</layer>
+
+					<layer name="goods24" style="goods" type="container" width="23%" height="30%" x="74%" y="33%"  align="lefttop"      >
+						<layer name="goodsimg24"  style="goodsimg" align="lefttop"   html="商品图片4"  x="0%" y="0%"           onclick="" />
+						<layer name="goodsname24"  style="goodsname" align="lefttop"   html="商品名称4" x="0%"  y="88%"            onclick="" />
+					</layer>
+
+					<layer name="goods31" style="goods" type="container" width="23%" height="30%" x="2%" y="64%"  align="lefttop"      >
+						<layer name="goodsimg31"  style="goodsimg" align="lefttop"   html="商品图片1"  x="0%" y="0%"           onclick="" />
+						<layer name="goodsname31"  style="goodsname" align="lefttop"   html="商品名称1" x="0%"  y="88%"            onclick="" />
+					</layer>
+
+					<layer name="goods32" style="goods" type="container" width="23%" height="30%" x="26%" y="64%"  align="lefttop"      >
+						<layer name="goodsimg32"  style="goodsimg" align="lefttop"   html="商品图片2"  x="0%" y="0%"           onclick="" />
+						<layer name="goodsname32"  style="goodsname" align="lefttop"   html="商品名称2" x="0%"  y="88%"            onclick="" />
+					</layer>
+
+					<layer name="goods33" style="goods" type="container" width="23%" height="30%" x="50%" y="64%"  align="lefttop"      >
+						<layer name="goodsimg33"  style="goodsimg" align="lefttop"   html="商品图片3"  x="0%" y="0%"           onclick="" />
+						<layer name="goodsname33"  style="goodsname" align="lefttop"   html="商品名称3" x="0%"  y="88%"            onclick="" />
+					</layer>
+
+					<layer name="goods34" style="goods" type="container" width="23%" height="30%" x="74%" y="64%"  align="lefttop"      >
+						<layer name="goodsimg34"  style="goodsimg" align="lefttop"   html="商品图片4"  x="0%" y="0%"           onclick="" />
+						<layer name="goodsname34"  style="goodsname" align="lefttop"   html="商品名称4" x="0%"  y="88%"            onclick="" />
+					</layer>
+
+
+				</layer>
+
+		</layer>
+
+	</layer>
+
+	<!-- <events  name="exampleevents"
+	        onresize="mul(w1,stagewidth,0.5); roundval(w1); sub(w2,stagewidth,w1); copy(layer[bg1].width,w1); copy(layer[bg2].width,w2);"
+	        /> -->
+
+	<layer name="openstorebtn" keep="true" style="text" 
+	       align="rightbottom" x="20" y="80"    
+	       
+	       html="单击我打开商店"
+	       onclick="storeopen()"
+	       />
+
+	<style name="text"
+		url="%SWFPATH%/plugins/textfield.swf"
+		children="false"
+		css="text-align:center; color:#FFFFFF;  font-size:16px;"
+		vcenter="true"
+		backgroundcolor="0x000000" 
+		backgroundalpha="0.667" 
+		roundedge="1" 
+		border="true" 
+		enable="false"
+		bordercolor="0xDDDDDD"
+		width="150"
+		height="24"
+		shadow="0"
+		/>
+
+
+	<style name="storelist"
+		url="%SWFPATH%/plugins/textfield.swf"
+		children="false"
+		css="text-align:center; color:#FFFFFF;  font-size:16px;"
+		vcenter="true"
+		backgroundcolor="#000000" 
+		backgroundalpha="0.27" 
+		roundedge="10"
+		onover="tween(alpha,0.5);"
+		onout="tween(alpha,1);tween(bordercolor,0x66FF66 );"
+		border="true" 
+		bordercolor="#CC3300"
+		width="88%"
+		height="8%"
+		shadow="3"
+		/>
+	<style name="button"
+		url="%SWFPATH%/plugins/textfield.swf"
+		children="false"
+		css="text-align:center; color:#FFFFFF;  font-size:16px;"
+		vcenter="true"
+		backgroundcolor="#000000" 
+		backgroundalpha="0.667" 
+		roundedge="1" 
+		border="true" 
+		bordercolor="0xFFFFFF"
+		width="88%"
+		height="8%"
+		shadow="0"
+		/>
+	<style name="goods"
+		children="true"
+		vcenter="true"
+		/>
+	<style name="goodsname"
+		url="%SWFPATH%/plugins/textfield.swf"
+		children="false"
+		css="text-align:center; color:#FFFFFF;  font-size:20px;"
+		vcenter="true"
+		backgroundcolor="0x000000" 
+		backgroundalpha="0.667" 
+		roundedge="1" 
+		border="true" 
+		bordercolor="0xDDDDDD"
+		height="13%"
+		width="100%"
+		shadow="0"
+		/>
+	<style name="goodsimg"
+		url="%SWFPATH%/plugins/textfield.swf"
+		children="false"
+		css="text-align:center; color:#FFFFFF;  font-size:16px;"
+		vcenter="true"
+		backgroundcolor="0x000000" 
+		backgroundalpha="0.667" 
+		roundedge="1" 
+		border="true" 
+		bordercolor="0xDDDDDD"
+		height="86%"
+		width="100%"
+		shadow="0"
+		/>
+
+	<style name="rightbar"
+		url="%SWFPATH%/plugins/textfield.swf"
+		
+		css="text-align:center; color:#FFFFFF;  font-size:12px;"
+		vcenter="true"
+		backgroundcolor="0x000000" 
+		backgroundalpha="0.667" 
+		roundedge="1" 
+		border="true" 
+		bordercolor="0xDDDDDD"
+		width="98%"
+		height="4%"
+		shadow="0"
+		/>
+
+	<style name="rightlist"
+		children="false"
+		css="text-align:center; color:#FFFFFF;  font-size:12px;"
+		vcenter="true"
+		backgroundcolor="0x000000" 
+		backgroundalpha="0.667" 
+		roundedge="1" 
+		border="true" 
+		bordercolor="0xDDDDDD"
+		width="98%"
+		height="94%"
+		shadow="0"
+		/>
+
+
+
+<events onviewchange="rotatecompasses();"
+			/>
+
+	
+
+
+</krpano>
